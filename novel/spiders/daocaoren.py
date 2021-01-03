@@ -5,7 +5,7 @@ import scrapy
 class DaocaorenSpider(scrapy.Spider):
     name = 'daocaoren'
     allowed_domains = ['www.20dcr.com']
-    start_urls = ['https://www.20dcr.com/book/zhongjidouluo/4576285.html']
+    start_urls = ['https://www.20dcr.com/book/4564/1105393.html']
 
     def parse(self, response):
         title = response.xpath("//h1//text()").get()
@@ -25,8 +25,10 @@ class DaocaorenSpider(scrapy.Spider):
                 "content": content
             })
         else:
-            title = response.request.meta.get("title")
-            content = response.request.meta.get("content") + "\n" + content
+            raw_title = response.request.meta.get("title")
+            if raw_title:
+                title = raw_title
+                content = response.request.meta.get("content") + "\n" + content
             next_url_path = response.xpath("//div[@class='row']//a[3]/@href").get()
             next_url = f"https://www.20dcr.com{next_url_path}"
             yield {
