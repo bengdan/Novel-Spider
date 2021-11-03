@@ -9,6 +9,7 @@ class RanwenSpider(scrapy.Spider):
     start_urls = ['https://www.ranwen.la/files/article/157/157409/'] # 斗罗大陆
     # start_urls = ['https://www.ranwen.la/files/article/3/3529/'] # 冰火魔厨
     # start_urls = ['https://www.ranwen.la/files/article/162/162120/']
+    # start_urls = ['https://www.ranwen.la/files/article/93/93724/'] # 剑来
 
     def parse(self, response):
         contents = response.xpath("//dd/a")
