@@ -29,3 +29,16 @@ scrapy crawl ranwen --nolog -o data.csv
 ```sh
 python txt-converter.py
 ```
+## 飘香文学
+
+* 网页：https://www.ptwxz.com/
+
+```shell
+scrapy crawl piaoxiang --nolog -o data.csv
+```
+
+* 生成txt
+
+```sh
+python txt-converter.py
+```
