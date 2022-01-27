@@ -5,9 +5,9 @@ import scrapy
 class RanwenSpider(scrapy.Spider):
     name = 'ranwen'
     allowed_domains = ['ranwen.la']
-    start_urls = ['https://www.ranwen.la/files/article/153/153252/'] # 万相之王
+    # start_urls = ['https://www.ranwen.la/files/article/153/153252/'] # 万相之王
 #    start_urls = ['https://www.ranwen.la/files/article/14/14868/'] # 雪中悍刀行
-#    start_urls = ['https://www.ranwen.la/files/article/157/157409/'] # 斗罗大陆
+    start_urls = ['https://www.ranwen.la/files/article/157/157409/'] # 斗罗大陆
 #    start_urls = ['https://www.ranwen.la/files/article/93/93879/'] # 三寸人间
 #    start_urls = ['https://www.ranwen.la/files/article/99/99829/'] # 大梦主
     # start_urls = ['https://www.ranwen.la/files/article/93/93724/'] # 剑来
@@ -26,7 +26,7 @@ class RanwenSpider(scrapy.Spider):
         content_list = response.xpath("//div[@id='content']//p/text()")
         content = ""
         for p in content_list:
-            if "www." in p:
+            if "www." in p.get():
                 continue
             content += p.get() + "\n"
 
