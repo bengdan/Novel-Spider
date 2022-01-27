@@ -26,6 +26,8 @@ class RanwenSpider(scrapy.Spider):
         content_list = response.xpath("//div[@id='content']//p/text()")
         content = ""
         for p in content_list:
+            if "www." in p:
+                continue
             content += p.get() + "\n"
 
         yield {
