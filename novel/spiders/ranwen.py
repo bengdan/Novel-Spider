@@ -28,6 +28,8 @@ class RanwenSpider(scrapy.Spider):
         for p in content_list:
             if ".com" in p.get() or "www" in p.get():
                 continue
+            if "第" in p.get() and "章" in p.get():
+                continue
             content += p.get() + "\n"
 
         yield {
