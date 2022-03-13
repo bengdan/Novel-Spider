@@ -42,3 +42,16 @@ scrapy crawl piaoxiang --nolog -o data.csv
 ```sh
 python txt-converter.py
 ```
+## 努努书坊
+
+* 网页：https://www.kanunu8.com/
+
+```shell
+scrapy crawl nunu --nolog -o data.csv
+```
+
+* 生成txt
+
+```sh
+python txt-converter.py
+```
