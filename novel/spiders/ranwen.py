@@ -5,9 +5,12 @@ import scrapy
 class RanwenSpider(scrapy.Spider):
     name = 'ranwen'
     allowed_domains = ['ranwen.la']
-    # start_urls = ['https://www.ranwen.la/files/article/153/153252/'] # 万相之王
+    # start_urls = ['https://www.ranwen.la/files/article/176/176262/'] # 我有一剑
+    # start_urls = ['https://www.ranwen.la/files/article/154/154292/'] # 夜的命名术
+    # start_urls = ['https://www.ranwen.la/files/article/173/173488/'] # 灵境行者
+    start_urls = ['https://www.ranwen.la/files/article/153/153252/'] # 万相之王
 #    start_urls = ['https://www.ranwen.la/files/article/14/14868/'] # 雪中悍刀行
-    start_urls = ['https://www.ranwen.la/files/article/157/157409/'] # 斗罗大陆
+#     start_urls = ['https://www.ranwen.la/files/article/157/157409/'] # 斗罗大陆
 #    start_urls = ['https://www.ranwen.la/files/article/93/93879/'] # 三寸人间
 #    start_urls = ['https://www.ranwen.la/files/article/99/99829/'] # 大梦主
     # start_urls = ['https://www.ranwen.la/files/article/93/93724/'] # 剑来

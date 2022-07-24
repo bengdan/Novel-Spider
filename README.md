@@ -55,3 +55,17 @@ scrapy crawl nunu --nolog -o data.csv
 ```sh
 python txt-converter.py
 ```
+
+## 爱看小说
+
+* 网页：https://www.ixs.la/
+
+```shell
+scrapy crawl aikan --nolog -o data.csv
+```
+
+* 生成txt
+
+```sh
+python txt-converter.py
+```

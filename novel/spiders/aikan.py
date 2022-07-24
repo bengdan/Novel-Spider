@@ -3,29 +3,29 @@ import scrapy
 
 
 class RanwenSpider(scrapy.Spider):
-    name = 'piaoxiang'
-    allowed_domains = ['ptwxz.com']
-    start_urls = ['https://www.ptwxz.com/html/0/727/index.html'] # 神印王座
-    # start_urls = ['https://www.ptwxz.com/html/11/11934/'] # 金刚不坏大寨主
+    name = 'aikan'
+    allowed_domains = ['ixs.la']
+    start_urls = ['https://www.ixs.la/ks77009/'] # 重生唐三
 
     def parse(self, response):
-        contents = response.xpath("//ul//a/@href")
-        for content in contents:
+        contents = response.xpath("//dd/a/@href")
+        for content in contents[12:]:
             link = content.get()
-            next_url = f"{self.start_urls[0]}{link}"
+            next_url = f"https://www.ixs.la{link}"
             yield scrapy.Request(next_url, self.parse_content, meta={"index": contents.index(content)})
 
     def parse_content(self, response):
         title = response.xpath("//h1/text()").get()
-        raw_content = response.text.split("</table>\r\n\r\n\r\n")[1].split("<!-- 翻页上AD开始")[0]
-
+        raw_content = response.xpath("//div[@id='content']").get()
         content = raw_content\
             .replace(";&nbsp;","",-1)\
             .replace("&nbsp","",-1)\
+            .replace(" ","",-1)\
             .replace("<br />","\n",-1)\
             .replace("<br>","\n",-1)\
             .replace("&emsp;","\n",-1)\
-            .replace("</div>","",-1)
+            .replace("</div>","",-1)\
+            .replace('<div id="content">',"",-1)
 
         yield {
             "index": response.meta.get("index"),
