@@ -12,7 +12,7 @@ scrapy crawl daocaoren --nolog -o data.csv
 * 生成txt
 
 ```sh
-python txt-converter.py
+python3 txt-converter.py
 ```
 
 ## 燃文网
@@ -27,7 +27,7 @@ scrapy crawl ranwen --nolog -o data.csv
 * 生成txt
 
 ```sh
-python txt-converter.py
+python3 txt-converter.py
 ```
 ## 飘香文学
 
@@ -40,7 +40,7 @@ scrapy crawl piaoxiang --nolog -o data.csv
 * 生成txt
 
 ```sh
-python txt-converter.py
+python3 txt-converter.py
 ```
 ## 努努书坊
 
@@ -53,7 +53,7 @@ scrapy crawl nunu --nolog -o data.csv
 * 生成txt
 
 ```sh
-python txt-converter.py
+python3 txt-converter.py
 ```
 
 ## 爱看小说
@@ -67,5 +67,5 @@ scrapy crawl aikan --nolog -o data.csv
 * 生成txt
 
 ```sh
-python txt-converter.py
+python3 txt-converter.py
 ```
