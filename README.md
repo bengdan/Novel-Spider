@@ -58,7 +58,7 @@ python3 txt-converter.py
 
 ## 爱看小说
 
-* 网页：https://www.ixs.la/
+* 网页：https://m.bqg121.com/
 
 ```shell
 scrapy crawl aikan --nolog -o data.csv
