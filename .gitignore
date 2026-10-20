@@ -126,3 +126,4 @@ dmypy.json
 # This Project Only
 *.csv
 *.txt
+*.epub
