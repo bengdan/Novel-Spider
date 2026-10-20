@@ -2,7 +2,7 @@
 import scrapy
 
 
-class RanwenSpider(scrapy.Spider):
+class KuibaSpider(scrapy.Spider):
     name = 'kuiba'
     allowed_domains = ['99csw.com']
     start_urls = ['https://www.99csw.com/book/4882/index.htm']

@@ -2,7 +2,7 @@
 import scrapy
 
 
-class RanwenSpider(scrapy.Spider):
+class NunuSpider(scrapy.Spider):
     name = 'nunu'
     allowed_domains = ['kanunu8.com']
     start_urls = ['https://www.kanunu8.com/book4/10522/index.html'] # 背叛

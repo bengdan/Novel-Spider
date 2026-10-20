@@ -2,10 +2,11 @@
 import scrapy
 
 
-class RanwenSpider(scrapy.Spider):
+class AikanSpider(scrapy.Spider):
     name = 'aikan'
     allowed_domains = ['bqg121.com']
-    start_urls = ['https://m.bqg121.com/info/16028/list.html'] # 重生唐三
+    # start_urls = ['https://m.bqg121.com/info/16028/list.html'] # 重生唐三
+    start_urls = ['https://653.bqgdi.com/info/122030/list.html'] # 重生唐三
 
     def parse(self, response):
         contents = response.xpath("//dd/a")
