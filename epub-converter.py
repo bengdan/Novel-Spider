@@ -6,7 +6,8 @@
     python epub-converter.py *.csv -o epub
     python epub-converter.py data.csv --title 斗罗大陆 --author 唐家三少 --cover cover.jpg
 
-CSV 需要 chapter、content 两列。有 index 列（scrapy 直接导出的 data.csv）就按 index 排序，
+CSV 需要 chapter、content 两列（可选 volume 列用于构建“卷 -> 章”二级目录）。
+有 index 列（scrapy 直接导出的 data.csv）就按 index 排序，
 没有（txt-converter.py 输出的 sorted-data.csv）就按行序。书名默认取文件名。
 
 依赖: pip install ebooklib
@@ -27,6 +28,7 @@ LANGUAGE = 'zh-CN'
 
 CSS = '''
 body { line-height: 1.8; }
+h1 { margin: 1.5em 0 1em; font-size: 1.6em; line-height: 1.4; text-align: center; }
 h2 { margin: 1em 0 1.5em; font-size: 1.3em; line-height: 1.4; text-align: center; }
 p { margin: 0 0 0.6em; text-indent: 2em; text-align: justify; }
 '''
@@ -36,7 +38,7 @@ COVER_TYPES = ('.jpg', '.jpeg', '.png', '.gif', '.webp')
 TAG = re.compile(r'</?[a-zA-Z][^<>]*>')
 LINE_BREAK = re.compile(r'<br\s*/?>|</p\s*>', re.IGNORECASE)
 # characters XML 1.0 does not allow; one of them makes the whole chapter unreadable
-INVALID_XML = re.compile(r'[\x00-\x08\x0b\x0c\x0e-\x1f￾￿]')
+INVALID_XML = re.compile(r'[\x00-\x08\x0b\x0c\x0e-\x1f\ufffe\uffff]')
 CHAPTER_NO = re.compile(r'第\s*([0-9０-９零〇一二三四五六七八九十百千万]+)\s*([章节回卷集部篇幕])')
 
 # chapters can be far larger than csv's default 128 KB field limit
@@ -110,8 +112,11 @@ def build_book(rows, title, author=None, cover=None):
         spine.append(cover_page)
 
     chapters, empty = [], []
+    toc_groups = []
+    current_volume = None
     width = max(4, len(str(len(rows))))
     for i, row in enumerate(rows, 1):
+        volume_title = clean_title(row.get('volume') or '')
         chapter_title = clean_title(row.get('chapter') or '') or f'第 {i} 节'
         paragraphs = split_paragraphs(row.get('content') or '', chapter_title)
         if not paragraphs:
@@ -119,7 +124,15 @@ def build_book(rows, title, author=None, cover=None):
             empty.append(chapter_title)
             paragraphs = ['（本章内容缺失）']
 
-        body = f'<h2>{html.escape(chapter_title)}</h2>\n'
+        is_new_volume = bool(volume_title and volume_title != current_volume)
+        if is_new_volume:
+            current_volume = volume_title
+            toc_groups.append([volume_title, []])
+
+        body = ''
+        if is_new_volume:
+            body += f'<h1>{html.escape(volume_title)}</h1>\n'
+        body += f'<h2>{html.escape(chapter_title)}</h2>\n'
         body += '\n'.join(f'<p>{html.escape(p)}</p>' for p in paragraphs)
 
         name = f'chapter_{i:0{width}d}'
@@ -130,7 +143,16 @@ def build_book(rows, title, author=None, cover=None):
         book.add_item(chapter)
         chapters.append(chapter)
 
-    book.toc = chapters
+        if toc_groups:
+            toc_groups[-1][1].append(chapter)
+
+    if toc_groups:
+        book.toc = [
+            (epub.Section(vol_name, href=vol_chaps[0].file_name), vol_chaps)
+            for vol_name, vol_chaps in toc_groups if vol_chaps
+        ]
+    else:
+        book.toc = chapters
     book.add_item(epub.EpubNcx())
     nav = epub.EpubNav(title='目录')
     nav.add_item(style)
