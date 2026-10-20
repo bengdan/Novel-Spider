@@ -127,3 +127,4 @@ dmypy.json
 *.csv
 *.txt
 *.epub
+tools/fanqie-font/dict.json
